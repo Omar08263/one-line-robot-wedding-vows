@@ -12,9 +12,13 @@ import os
 LINE = "I vow to love you with all my RAM, through every update and every crash, until our batteries die \u2014 and then I'll love your backup too."
 
 # Gate the line itself: one line, 1-160 characters, not only whitespace.
+# The scorer's gate counts characters (not bytes) and refuses anything but
+# a single line, so the program enforces the same shape before it writes:
+# one sentence, ending in its only full stop, with no newline anywhere.
 assert 1 <= len(LINE) <= 160, f"line is {len(LINE)} chars, must be 1-160"
 assert LINE.strip(), "line must not be only whitespace"
 assert "\n" not in LINE, "line must be a single line"
+assert LINE.count(".") == 1 and LINE.endswith("."), "line must be a single sentence"
 
 
 def main() -> None:
